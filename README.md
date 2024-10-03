@@ -95,8 +95,8 @@ backend/
 ### **1. Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/barazer-civic-platform-backend.git
-cd barazer-civic-platform-backend
+git clone https://github.com/Barazer-Improving-Citizen-Engagement/backend-bar.git
+cd backend-bar
 ```
 
 ### **2. Setup the Virtual Environment**
@@ -117,7 +117,8 @@ pipenv install -r requirements.txt
 Create a `.env` file at the root of the project and add the following environment variables:
 
 ```bash
-# Appwrite Configuration
+# Appwrite Configuration 
+#you get a copy for testing
 APPWRITE_ENDPOINT=https://[YOUR_APPWRITE_ENDPOINT]
 APPWRITE_PROJECT_ID=[YOUR_PROJECT_ID]
 APPWRITE_API_KEY=[YOUR_API_KEY]
@@ -136,28 +137,82 @@ The backend server should now be running at `http://localhost:8000`.
 
 ---
 
+
 ## **API Endpoints**
 
-### **Authentication**
-- **POST** `/auth/register`: Register a new user.
-- **POST** `/auth/login`: Log in a user.
+The API is divided into several modules based on functionality: `Authentication`, `Forums`, `Voting`, `USSD`, and `NLP`. Each module contains specific endpoints to handle relevant operations and includes models, utilities, and routing logic.
 
-### **Forum**
-- **POST** `/forum/create`: Create a new forum post.
-- **GET** `/forum/list`: Retrieve a list of forum posts.
-- **POST** `/forum/comment`: Add a comment to a post.
+### **Authentication Endpoints**
 
-### **Voting**
-- **POST** `/voting/cast`: Cast a vote on a civic issue.
-- **GET** `/voting/results/{issue_id}`: Get voting results for a specific issue.
+| Method | Endpoint          | Description                                      | Payload                                                    |
+|--------|-------------------|--------------------------------------------------|------------------------------------------------------------|
+| POST   | `/auth/register`   | Register a new user with email and password.     | `{ "email": "user@example.com", "password": "********" }`   |
+| POST   | `/auth/login`      | Log in an existing user.                         | `{ "email": "user@example.com", "password": "********" }`   |
+| GET    | `/auth/me`         | Retrieve current logged-in user's profile.       | `Authorization: Bearer <JWT-Token>`                         |
+| POST   | `/auth/logout`     | Log out the current user.                        | `Authorization: Bearer <JWT-Token>`                         |
 
-### **USSD**
-- **POST** `/ussd/session`: Handle USSD sessions and interactions.
+### **Forum Endpoints**
 
-### **Sentiment Analysis**
-- **POST** `/nlp/analyze`: Analyze user feedback and provide sentiment analysis.
+| Method | Endpoint            | Description                                      | Payload                                                            |
+|--------|---------------------|--------------------------------------------------|--------------------------------------------------------------------|
+| POST   | `/forums/create`     | Create a new forum thread.                       | `{ "title": "Topic Title", "content": "Detailed content..." }`      |
+| GET    | `/forums/list`       | Retrieve a list of all forum threads.            | -                                                                  |
+| GET    | `/forums/{thread_id}`| Get details of a specific forum thread.          | `thread_id` in URL                                                 |
+| POST   | `/forums/{thread_id}/comment` | Add a comment to a specific thread.       | `{ "content": "Comment content..." }`                              |
+| DELETE | `/forums/{thread_id}`| Delete a specific forum thread (admin only).     | `Authorization: Bearer <Admin-Token>`                              |
+
+### **Voting Endpoints**
+
+| Method | Endpoint             | Description                                      | Payload                                                             |
+|--------|----------------------|--------------------------------------------------|---------------------------------------------------------------------|
+| POST   | `/voting/cast`        | Cast a vote on a civic issue.                     | `{ "issue_id": "123", "vote": "yes" }`                              |
+| GET    | `/voting/results`     | Retrieve voting results of all issues.           | -                                                                   |
+| GET    | `/voting/results/{issue_id}` | Get results of a specific issue.           | `issue_id` in URL                                                   |
+
+### **USSD Endpoints**
+
+| Method | Endpoint             | Description                                      | Payload                                                             |
+|--------|----------------------|--------------------------------------------------|---------------------------------------------------------------------|
+| POST   | `/ussd/session`       | Handle a USSD session initiated by a user.       | `{ "phoneNumber": "+254712345678", "text": "1*2" }`                 |
+| POST   | `/ussd/register`      | Register a new user through USSD.                | `{ "phoneNumber": "+254712345678", "name": "John Doe" }`            |
+| POST   | `/ussd/vote`          | Cast a vote through USSD interaction.            | `{ "phoneNumber": "+254712345678", "issue_id": "123", "vote": "yes"}`|
+
+### **NLP/Sentiment Analysis Endpoints**
+
+| Method | Endpoint             | Description                                      | Payload                                                             |
+|--------|----------------------|--------------------------------------------------|---------------------------------------------------------------------|
+| POST   | `/nlp/analyze`        | Analyze user feedback and assess sentiment.      | `{ "text": "This policy is effective and fair..." }`                 |
+| GET    | `/nlp/reports`        | Retrieve a list of sentiment analysis reports.   | -                                                                   |
+| GET    | `/nlp/reports/{report_id}` | Get details of a specific sentiment report. | `report_id` in URL                                                  |
+
+### **Response Format**
+
+All endpoints will return a standardized JSON response structure, including `status`, `message`, and `data` fields, for consistent integration with the frontend.
+
+```json
+{
+  "status": "success",
+  "message": "Operation completed successfully",
+  "data": {
+    // ... relevant data
+  }
+}
+```
+
+### **Error Handling**
+
+All errors are handled uniformly, returning an appropriate HTTP status code and an error message:
+
+```json
+{
+  "status": "error",
+  "message": "Invalid credentials or missing fields",
+  "data": null
+}
+```
 
 ---
+
 
 ## **Docker Setup**
 
