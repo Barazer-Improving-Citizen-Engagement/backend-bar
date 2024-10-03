@@ -46,22 +46,40 @@ This backend powers the Barazer Civic Platform, designed to support the frontend
 
 ```bash
 backend/
-├── app
-│   ├── main.py                 # Entry point for the FastAPI app
-│   ├── config.py               # Configuration settings and environment variables
-│   ├── database.py             # Database client and helper functions
-│   ├── endpoints               # API endpoints folder
-│   │   ├── auth.py             # Authentication endpoints
-│   │   ├── forum.py            # Forum endpoints
-│   │   ├── voting.py           # Voting endpoints
-│   │   ├── ussd.py             # USSD endpoints
-│   │   └── nlp.py              # Sentiment analysis endpoints
-│   └── models.py               # Data models and schemas
-├── Dockerfile                  # Docker configuration file
-├── .env                        # Environment variables file
-├── requirements.txt            # Dependencies for the project
-├── Pipfile                     # Pipenv configuration file
-└── README.md                   # Documentation and project overview
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── auth/
+│   │   ├── __init__.py
+│   │   ├── endpoints.py
+│   │   ├── models.py
+│   │   └── utils.py
+│   ├── forums/
+│   │   ├── __init__.py
+│   │   ├── endpoints.py
+│   │   ├── models.py
+│   │   └── utils.py
+│   ├── voting/
+│   │   ├── __init__.py
+│   │   ├── endpoints.py
+│   │   ├── models.py
+│   │   └── utils.py
+│   ├── ussd/
+│   │   ├── __init__.py
+│   │   ├── endpoints.py
+│   │   ├── models.py
+│   │   └── utils.py
+│   ├── nlp/
+│   │   ├── __init__.py
+│   │   ├── endpoints.py
+│   │   ├── models.py
+│   │   └── utils.py
+│   ├── config.py
+│   └── database.py
+├── requirements.txt
+├── Dockerfile
+└── README.md
+
 ```
 
 ---
