@@ -7,8 +7,8 @@ bin-release/
 # Other files and folders
 .settings/
 .idea/
-.env
-.Dockerfile
+env
+Dockerfile
 
 # Executables
 *.swf
