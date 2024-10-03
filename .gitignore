@@ -7,7 +7,7 @@ bin-release/
 # Other files and folders
 .settings/
 .idea/
-env
+.env
 Dockerfile
 
 # Executables
