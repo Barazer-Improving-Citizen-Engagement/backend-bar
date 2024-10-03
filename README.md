@@ -1,6 +1,6 @@
 
 ---
-
+> **DON'T PUSH TO MAIN** 
 # **Barazer Civic Platform Backend**
 
 This backend powers the Barazer Civic Platform, designed to support the frontend applications in handling user authentication, forums, voting systems, USSD interactions, and AI-driven sentiment analysis. The backend is built using **FastAPI** and integrates with **Appwrite** for authentication and data storage.
